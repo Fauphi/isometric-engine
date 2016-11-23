@@ -2,15 +2,17 @@
 * @Author: Philipp
 * @Date:   2016-11-24 00:16:01
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-24 00:21:01
+* @Last Modified time: 2016-11-24 00:26:03
 */
 
 'use strict';
 
-let array = [];
+let array = []
+,	width = 0
+,	height = 0;
 
 const valid = (x,y) => {
-	const valid = (x>=0 && x<5 && y>=0 && y<5);
+	const valid = (x>=0 && x<width && y>=0 && y<height);
 	return valid;	
 }
 
@@ -54,12 +56,17 @@ const check = (x,y,height) => {
 
 export const recalc = (a) => {
 	array = a;
-	for(let i=0;i<array.length;i++) {
-		for(let j=0;j<array.length;j++) {
-			if(array[i][j]!=0) {
-				check(i,j,array[i][j]);
+	if(array.length>0) {
+		width = array.length;
+		height = array[0].length;
+
+		for(let i=0;i<array.length;i++) {
+			for(let j=0;j<array.length;j++) {
+				if(array[i][j]!=0) {
+					check(i,j,array[i][j]);
+				}
 			}
 		}
+		return array;
 	}
-	return array;
 }

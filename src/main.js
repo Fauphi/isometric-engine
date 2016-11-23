@@ -2,7 +2,7 @@
 * @Author: philipp
 * @Date:   2016-11-22 20:30:45
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-24 00:21:07
+* @Last Modified time: 2016-11-24 00:26:36
 */
 
 'use strict';
@@ -18,7 +18,7 @@ let array = [
 	[0,0,0,0,0],
 	[0,0,2,0,0],
 	[0,0,0,0,0],
-	[0,0,0,0,3]
+	[0,0,0,0,2]
 ];
 
 array = recalc(array);

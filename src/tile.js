@@ -1,13 +1,13 @@
 /*
 * @Author: philipp
 * @Date:   2016-11-22 23:35:14
-* @Last Modified by:   philipp
-* @Last Modified time: 2016-11-23 00:25:50
+* @Last Modified by:   Philipp
+* @Last Modified time: 2016-11-23 22:39:43
 */
 
 'use strict';
 
-import { BLOG_WIDTH, BLOG_HEIGHT } from './globals.js';
+import { BLOG_WIDTH, BLOG_HEIGHT, HEIGHT_PIXEL, cartToIso, isoToCart } from './globals.js';
 
 export class Tile {
 
@@ -33,14 +33,21 @@ export class Tile {
 		this.draw();
 	}
 
+	_addHeight(y) {
+		return y + (-this.height*HEIGHT_PIXEL);
+	}
+
 	draw(mouseOver=false, screenY=null) {
+		// transform coords
+		const point = cartToIso({x: this.x, y: this.y})
+		,	screenx = (this.worldWith*BLOG_WIDTH) + point.x;
+		let screeny = 10 + point.y;
+
+		if(this.height!=0) screeny = this._addHeight(screeny);
+
+		// draw
 		const ctx = this.ctx;
-
-		const screenx = ((this.worldWith*BLOG_WIDTH)) + (this.x - this.y) * (BLOG_WIDTH);
-		const screeny = (10+(this.x + this.y) * (BLOG_HEIGHT))+this.height;
-
-		ctx.beginPath();
-		ctx.lineWidth = "2";
+		// get fill color
 		if(!this.active) {
 			let fillColor;
 			
@@ -57,10 +64,15 @@ export class Tile {
   				default:
   					fillColor = (mouseOver)?'lightgrey':'white';
   			}
+
   			ctx.fillStyle = fillColor;
 
-		} else ctx.fillStyle = 'grey';
-		
+		} else {
+			ctx.fillStyle = 'grey';
+		}
+
+		ctx.beginPath();
+		ctx.lineWidth = "2";
 		ctx.strokeStyle = 'black';
 
 		ctx.moveTo(screenx,screeny);

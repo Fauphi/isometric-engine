@@ -1,8 +1,8 @@
 /*
 * @Author: philipp
 * @Date:   2016-11-22 20:31:42
-* @Last Modified by:   philipp
-* @Last Modified time: 2016-11-23 00:30:04
+* @Last Modified by:   Philipp
+* @Last Modified time: 2016-11-23 22:39:57
 */
 
 'use strict';
@@ -41,7 +41,7 @@ export class World {
 		for(let i=0;i<this.blogCount;i++) {
 			const x = i%this.width
 			,	y = Math.floor(i/this.height)
-			,	h = (i==399)?10:(i==269)?-20:0;
+			,	h = (i==399)?1:(i==269)?-2:0;
 
 			this.field.push(new Tile(x,y,this.cv.getContext("2d"),this.width,h));
 		}

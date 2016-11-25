@@ -13,15 +13,34 @@
         		top: 20px;
         		left: 20px;
         	}
-            /*body {
-                padding: 400px;
-            }*/
+            html, body {
+                padding: 0px;
+                margin: 0px;
+                background: #222032;
+                height: 100vh;
+                width: 100vw;
+            }
+            #world {
+                /*padding: 100px 20px 0px;*/
+                position: fixed;
+                bottom: 0px;
+                left: 40px;
+            }
+            #label {
+                color: white;
+                font-family: 'American Typewriter';
+                font-size: 20px;
+                position: absolute;
+                top: 20px;
+                left: 40px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
         </style>
     </head>
     <body>
+        <div id="label">World</div>
     	<div id="world"></div>
-        <div id="grid"></div>
-        <div id="grid2"></div>
     	<script type="text/javascript" src="bundle.js"></script>
     </body>
 </html>

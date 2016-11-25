@@ -2,12 +2,12 @@
 * @Author: philipp
 * @Date:   2016-11-22 23:35:14
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-25 23:36:38
+* @Last Modified time: 2016-11-25 23:42:26
 */
 
 'use strict';
 
-import { BLOG_WIDTH, BLOG_HEIGHT, HEIGHT_PIXEL, cartToIso, isoToCart } from './globals.js';
+import { BLOG_WIDTH, BLOG_HEIGHT, HEIGHT_PIXEL, PADDING_TOP, cartToIso, isoToCart } from './globals.js';
 
 export class Tile {
 
@@ -38,7 +38,7 @@ export class Tile {
 		// transform coords
 		const point = cartToIso({x: this.x, y: this.y})
 		,	screenx = (this.worldWith*BLOG_WIDTH) + point.x;
-		let screeny = 40 + point.y;
+		let screeny = PADDING_TOP + point.y;
 
 		if(this.height!=0) screeny = this._addHeight(screeny);
 

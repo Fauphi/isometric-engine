@@ -2,12 +2,12 @@
 * @Author: philipp
 * @Date:   2016-11-22 20:31:42
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-25 23:26:17
+* @Last Modified time: 2016-11-25 23:42:43
 */
 
 'use strict';
 
-import { BLOG_WIDTH, BLOG_HEIGHT, cartToIso, isoToCart } from './globals.js';
+import { BLOG_WIDTH, BLOG_HEIGHT, PADDING_TOP, cartToIso, isoToCart } from './globals.js';
 import { Tile } from './tile.js';
 import { recalc } from './recalcHeight.js';
 
@@ -34,7 +34,7 @@ export class World {
 		container.style.textAlign = 'center';
 		
 		this.cv.width = width*(BLOG_WIDTH*2);
-		this.cv.height = height*(BLOG_HEIGHT*2)+160;
+		this.cv.height = height*(BLOG_HEIGHT*2)+260;
 		
 		container.append(this.cv);
 
@@ -125,15 +125,15 @@ export class World {
 
 		const point = cartToIso({x: 0, y: this.map[0].length-1})
 		,	startX = (this.map[0].length*BLOG_WIDTH) + point.x - BLOG_WIDTH
-		,	startY = 40 + point.y + BLOG_HEIGHT;
+		,	startY = PADDING_TOP + point.y + BLOG_HEIGHT;
 
 		const pointMiddle = cartToIso({x: this.map.length-1, y: this.map[0].length-1})
 		,	middleX = (this.map[0].length*BLOG_WIDTH) + pointMiddle.x
-		,	middleY = 40 + pointMiddle.y + (BLOG_HEIGHT*2);
+		,	middleY = PADDING_TOP + pointMiddle.y + (BLOG_HEIGHT*2);
 
 		const pointEnd = cartToIso({x: this.map.length-1, y: 0})
 		,	endX = (this.map[0].length*BLOG_WIDTH) + pointEnd.x + BLOG_WIDTH
-		,	endY = 40 + pointEnd.y + BLOG_HEIGHT;
+		,	endY = PADDING_TOP + pointEnd.y + BLOG_HEIGHT;
 
 		ctx.beginPath();
 		ctx.fillStyle = lighter;
@@ -241,7 +241,7 @@ export class World {
 
 	_getTileAtCoord(x,y) {
 		x -= (this.map.length*BLOG_WIDTH);
-		y -= 40;
+		y -= PADDING_TOP;
 
 		const coords = isoToCart({x: x, y: y});
 

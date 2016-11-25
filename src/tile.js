@@ -2,7 +2,7 @@
 * @Author: philipp
 * @Date:   2016-11-22 23:35:14
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-23 22:39:43
+* @Last Modified time: 2016-11-25 01:37:31
 */
 
 'use strict';
@@ -11,7 +11,7 @@ import { BLOG_WIDTH, BLOG_HEIGHT, HEIGHT_PIXEL, cartToIso, isoToCart } from './g
 
 export class Tile {
 
-	constructor(x,y,ctx,worldWith,height=0) {
+	constructor(x,y,ctx,worldWith,height=0,neighbors) {
 		this.x = x;
 		this.y = y;
 		this.ctx = ctx;
@@ -20,7 +20,7 @@ export class Tile {
 		this.type = 'grass'; // grass, road, house
 		this.height = height;
 
-		this.draw();
+		// this.draw();
 	}
 
 	changeType(type) {
@@ -30,57 +30,57 @@ export class Tile {
 
 	changeHeight(height) {
 		this.height = height;
-		this.draw();
 	}
 
 	_addHeight(y) {
 		return y + (-this.height*HEIGHT_PIXEL);
 	}
 
-	draw(mouseOver=false, screenY=null) {
+	draw(mouseOver=false, screenY=null, top, right, bottom, left) {
 		// transform coords
 		const point = cartToIso({x: this.x, y: this.y})
 		,	screenx = (this.worldWith*BLOG_WIDTH) + point.x;
-		let screeny = 10 + point.y;
+		let screeny = 40 + point.y;
 
 		if(this.height!=0) screeny = this._addHeight(screeny);
 
 		// draw
 		const ctx = this.ctx;
 		// get fill color
-		if(!this.active) {
+		if(!mouseOver) {
 			let fillColor;
 			
-			switch (this.type) {
-  				case 'grass':
-  					fillColor = (mouseOver)?'darkgreen':'green';
+			switch (this.height) {
+  				case 2:
+  					fillColor = 'lightgreen';
   					break;
-  				case 'road':
-  					fillColor = (mouseOver)?'#707070':'grey';
+  				case 1:
+  					fillColor = 'green';
   					break;
-  				case 'house':
-  					fillColor = (mouseOver)?'darkred':'red';
+  				case 0:
+  					fillColor = 'darkgreen';
   					break;
   				default:
-  					fillColor = (mouseOver)?'lightgrey':'white';
+  					fillColor = 'white';
   			}
 
   			ctx.fillStyle = fillColor;
 
 		} else {
-			ctx.fillStyle = 'grey';
+			console.log('mouseOver');
+			ctx.fillStyle = 'red';
 		}
 
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = 'black';
 
-		ctx.moveTo(screenx,screeny);
+		ctx.moveTo(screenx,screeny+(top*HEIGHT_PIXEL));
 	    
-	    ctx.lineTo(screenx+(BLOG_WIDTH),screeny+(BLOG_HEIGHT));
-	    ctx.lineTo(screenx,screeny+(BLOG_HEIGHT*2));
-	    ctx.lineTo(screenx-(BLOG_WIDTH),screeny+(BLOG_HEIGHT));
-	    ctx.lineTo(screenx,screeny);
+	    ctx.lineTo(screenx+(BLOG_WIDTH),screeny+(BLOG_HEIGHT)+(right*HEIGHT_PIXEL));
+	    ctx.lineTo(screenx,screeny+(BLOG_HEIGHT*2)+(bottom*HEIGHT_PIXEL));
+	    ctx.lineTo(screenx-(BLOG_WIDTH),screeny+(BLOG_HEIGHT)+(left*HEIGHT_PIXEL));
+	    ctx.lineTo(screenx,screeny+(top*HEIGHT_PIXEL));
 
 		ctx.fill();
 		ctx.stroke();

@@ -2,7 +2,7 @@
 * @Author: philipp
 * @Date:   2016-11-22 20:30:45
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-24 00:26:36
+* @Last Modified time: 2016-11-24 22:58:20
 */
 
 'use strict';
@@ -10,7 +10,7 @@
 import { World } from './world.js';
 import { recalc } from './recalcHeight.js';
 
-// new World(20, 20, document.getElementById('world'));
+new World(20, 20, document.getElementById('world'));
 
 // recalc height test
 let array = [
@@ -29,4 +29,4 @@ const print = (array) => {
 	}
 }
 
-print(array);
+// print(array);

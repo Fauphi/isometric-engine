@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
 
+        <title>WORLD</title>
+
         <style type="text/css">
         	#toolbar {
         		width: 300px;
@@ -19,12 +21,39 @@
                 background: #222032;
                 height: 100vh;
                 width: 100vw;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
             #world {
                 /*padding: 100px 20px 0px;*/
                 position: fixed;
                 bottom: 0px;
-                left: 40px;
+                left: 200px;
+            }
+            #minimap {
+                position: fixed;
+                top: 60px;
+                left: 200px;
+                transform: rotateX(60deg);
+                z-index: 1;
+            }
+            #minimap canvas {
+                transform: rotate(45deg);   
+            }
+            #wrapper {
+                display: none;
+                position: fixed;
+                top: 30px;
+                left: 200px;
+                width: 300px;
+                height: 300px;
+                background-color: rgb(160,160,160);
+                border-radius: 50%;
+                z-index: 0;
             }
             #label {
                 color: white;
@@ -32,14 +61,16 @@
                 font-size: 20px;
                 position: absolute;
                 top: 20px;
-                left: 40px;
+                left: 200px;
                 text-transform: uppercase;
                 letter-spacing: 2px;
             }
         </style>
     </head>
     <body>
+        <div id="wrapper"></div>
         <div id="label">World</div>
+        <div id="minimap"></div>
     	<div id="world"></div>
     	<script type="text/javascript" src="bundle.js"></script>
     </body>

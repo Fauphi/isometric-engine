@@ -2,7 +2,7 @@
 * @Author: philipp
 * @Date:   2016-11-22 23:35:14
 * @Last Modified by:   Philipp
-* @Last Modified time: 2016-11-25 23:42:26
+* @Last Modified time: 2016-11-26 15:41:42
 */
 
 'use strict';
@@ -17,13 +17,23 @@ export class Tile {
 		this.ctx = ctx;
 		this.worldWith = worldWith;
 		this.active = false;
-		this.type = 'grass'; // grass, road, house
+		this.type = 'earth'; // earth, road, house
 		this.height = height;
 		this.neighbors = {};
 	}
 
 	changeHeight(height) {
+		if(height>=0) this.type = 'earth';
 		this.height = height;
+	}
+
+	changeType(newType) {
+		if(newType=='water' && this.height==0) {
+			this.type = newType;
+			this.height = -1;	
+		} else if(newType=='earth') {
+			this.height = 0;
+		}
 	}
 
 	addNeighbors(neighbors) {
@@ -34,9 +44,9 @@ export class Tile {
 		return y + (-this.height*HEIGHT_PIXEL);
 	}
 
-	draw(mouseOver=false) {
+	draw(mouseOver=false,visibleCoords) {
 		// transform coords
-		const point = cartToIso({x: this.x, y: this.y})
+		const point = cartToIso({x: this.x, y: this.y},visibleCoords)
 		,	screenx = (this.worldWith*BLOG_WIDTH) + point.x;
 		let screeny = PADDING_TOP + point.y;
 
@@ -48,21 +58,25 @@ export class Tile {
 		if(!mouseOver) {
 			let fillColor;
 			
-			switch (this.height) {
-				case 3:
-					fillColor = '#9CCE97';
-					break;
-  				case 2:
-  					fillColor = '#80C37C';
-  					break;
-  				case 1:
-  					fillColor = '#45B254';
-  					break;
-  				case 0:
-  					fillColor = '#0E562A';
-  					break;
-  				default:
-  					fillColor = 'white';
+			if(this.type=='earth') {
+				switch (this.height) {
+					case 3:
+						fillColor = '#9CCE97';
+						break;
+	  				case 2:
+	  					fillColor = '#80C37C';
+	  					break;
+	  				case 1:
+	  					fillColor = '#45B254';
+	  					break;
+	  				case 0:
+	  					fillColor = '#0E562A';
+	  					break;
+	  				default:
+	  					fillColor = 'white';
+	  			}
+  			} else if(this.type=='water' && this.height==-1) {
+  				fillColor = '#269387';
   			}
 
   			ctx.fillStyle = fillColor;
